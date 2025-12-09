@@ -2,10 +2,10 @@ import java.util.StringTokenizer;
 
 public class ITITokens {
     public static void main(String[] args) {
-        String sentence = "T develops people and T house of developers and ITI for people";
+        String sentence = "ITI develops people and ITI house of developers and ITI for people";
 
         System.out.println("Using StringTokenizer :");
-        StringTokenizer tokenizer = new StringTokenizer(sentence, "T");
+        StringTokenizer tokenizer = new StringTokenizer(sentence, "ITI");
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken().trim();
             if (!token.isEmpty()) {
