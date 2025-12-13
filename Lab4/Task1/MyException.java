@@ -1,4 +1,4 @@
-class MyException extends Exception {
+class MyException extends RuntimeException {
     MyException(String message) {
         super(message);
     }
