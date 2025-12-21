@@ -45,4 +45,17 @@ public class ClientMenuHandler {
         clientService.delete(id);
         ConsoleUI.success("Client removed.");
     }
+    public void displayClients() {
+    ConsoleUI.title("All Clients");
+    
+    if (clientService.getAllClients().isEmpty()) {
+        ConsoleUI.info("No clients found.");
+        return;
+    }
+
+    clientService.getAllClients().forEach(client -> 
+        System.out.println(client.getClientDetails())
+    );
+}
+
 }

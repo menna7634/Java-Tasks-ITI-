@@ -40,7 +40,9 @@ public abstract class LibraryItem {
     }
 
     public void increaseStock(int n) {
-        if (n > 0) stock += n;
+        if (n > 0){
+         stock += n;
+        }
     }
 
     public boolean decreaseStock(int n) {

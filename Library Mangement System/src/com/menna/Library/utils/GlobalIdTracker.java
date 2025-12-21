@@ -22,6 +22,10 @@ public class GlobalIdTracker {
         usedIds.add(id);
     }
 
+    public static void remove(int id) {
+    usedIds.remove(id);
+}
+
     public static List<Integer> getAllUsedIds(LibraryService libraryService, ClientService clientService) {
         List<Integer> bookAndMagazineIds = libraryService.getAllItems()
                 .stream()

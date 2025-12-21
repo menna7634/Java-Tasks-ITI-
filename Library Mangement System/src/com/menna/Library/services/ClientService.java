@@ -2,6 +2,7 @@ package com.menna.Library.services;
 
 import com.menna.Library.exceptions.ClientNotFoundException;
 import com.menna.Library.model.Client;
+import com.menna.Library.utils.GlobalIdTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +38,21 @@ public class ClientService implements CrudService<Client> {
         System.out.println("Client updated.");
     }
 
-    @Override
-    public void delete(int id) throws ClientNotFoundException {
-        Client existing = read(id);
-        clients.remove(existing);
-        System.out.println("Client deleted.");
+   public void delete(int id) throws ClientNotFoundException {
+    Client client = read(id);
+
+    if (!client.getBorrowedItems().isEmpty()) {
+        throw new ClientNotFoundException(
+                "Cannot delete client '" + client.getName() +
+                "' because they still have borrowed items."
+        );
     }
+
+    clients.remove(client);
+    GlobalIdTracker.remove(id);
+    System.out.println("Client deleted.");
+}
+
 
     public List<Client> getAllClients() {
         return clients;

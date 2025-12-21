@@ -7,7 +7,9 @@ public class Client {
     private int id;
     private String name;
     private String email;
-    private List<LibraryItem> borrowedItems = new ArrayList<>();
+
+    // Stores BorrowRecord, not LibraryItem
+    private List<BorrowRecord> borrowedItems = new ArrayList<>();
 
     public Client(int id, String name, String email) {
         this.id = id;
@@ -24,7 +26,9 @@ public class Client {
     }
 
     public void setName(String name) {
-        if (name != null && !name.isBlank()) this.name = name.trim();
+        if (name != null && !name.isBlank()) {
+            this.name = name.trim();
+        }
     }
 
     public String getEmail() {
@@ -32,27 +36,38 @@ public class Client {
     }
 
     public void setEmail(String email) {
-        if (email != null && !email.isBlank()) this.email = email.trim();
+        if (email != null && !email.isBlank()) {
+            this.email = email.trim();
+        }
     }
 
-    public List<LibraryItem> getBorrowedItems() {
+    public List<BorrowRecord> getBorrowedItems() {
         return borrowedItems;
     }
 
-    public void borrowItem(LibraryItem item) {
-        if (item != null && item.isAvailable()) {
-            item.decreaseStock(1);
-            borrowedItems.add(item);
-        }
+    public void addBorrowRecord(BorrowRecord record) {
+        borrowedItems.add(record);
     }
 
-    public void returnItem(LibraryItem item) {
-        if (borrowedItems.remove(item)) {
-            item.increaseStock(1);
-        }
+    public void removeBorrowRecord(BorrowRecord record) {
+        borrowedItems.remove(record);
     }
 
     public String getClientDetails() {
-        return "Client [ID:" + id + ", Name:" + name + ", Email:" + email + "]";
+
+        String details = "Client [ID:" + id + ", Name:" + name + ", Email:" + email + "]";
+
+        details += "\nBorrowed Items: ";
+        if (borrowedItems.isEmpty()) {
+            details += "None";
+        } else {
+            for (BorrowRecord rec : borrowedItems) {
+                details += "\n  - " + rec.getItem().getTitle() + 
+                           " (ID: " + rec.getItem().getId() + 
+                           ", Borrowed: " + rec.getBorrowDate() + ")";
+            }
+        }
+
+        return details;
     }
 }

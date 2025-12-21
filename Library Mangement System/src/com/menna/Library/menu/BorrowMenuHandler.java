@@ -2,6 +2,7 @@ package com.menna.Library.menu;
 
 import com.menna.Library.exceptions.ClientNotFoundException;
 import com.menna.Library.exceptions.ItemNotFoundException;
+import com.menna.Library.model.Book;
 import com.menna.Library.services.ClientService;
 import com.menna.Library.services.LibraryService;
 import com.menna.Library.utils.ConsoleUI;
@@ -41,4 +42,37 @@ public class BorrowMenuHandler {
 
         ConsoleUI.success("Item returned successfully.");
     }
+    
+    public void displayBorrowed() {
+    ConsoleUI.title("Borrowed Items Report");
+
+    var borrowedList = libraryService.getBorrowedItems(); 
+
+    if (borrowedList.isEmpty()) {
+        ConsoleUI.info("No items are currently borrowed.");
+        return;
+    }
+
+   System.out.println("ID | Title                 | Type       | Borrowed By            | Quantity");
+System.out.println("----------------------------------------------------------------------------");
+
+borrowedList.forEach(record -> {
+    var item = record.getItem();
+    var client = record.getClient();
+
+    String type = (item instanceof Book) ? "Book" : "Magazine";
+
+    System.out.printf(
+            "%-3d| %-20s| %-10s| %-22s| %-3d%n",
+            item.getId(),
+            item.getTitle(),
+            type,
+            client.getName() + " (ID:" + client.getId() + ")",
+            record.getQuantity()
+    );
+});
+
+    ConsoleUI.success("Total Borrowed Items: " + borrowedList.size());
+}
+
 }

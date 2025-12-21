@@ -10,7 +10,6 @@ public class Main {
         ClientService clientService = new ClientService();
 
         MenuSystem menu = new MenuSystem(libraryService, clientService);
-        menu.
-        run();
+        menu.run();
     }
 }

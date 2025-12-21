@@ -6,6 +6,8 @@ import com.menna.Library.services.ClientService;
 import com.menna.Library.services.LibraryService;
 import com.menna.Library.utils.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ItemMenuHandler {
@@ -59,4 +61,69 @@ public class ItemMenuHandler {
         libraryService.delete(id);
         ConsoleUI.success("Item removed successfully.");
     }
+   public void displayItemsDetails(List<LibraryItem> items) {
+
+    List<Book> books = new ArrayList<>();
+    List<Magazine> magazines = new ArrayList<>();
+
+    for (LibraryItem item : items) {
+        if (item instanceof Book) {
+            books.add((Book) item);
+        } else if (item instanceof Magazine) {
+            magazines.add((Magazine) item);
+        }
+    }
+
+
+    ConsoleUI.title("Books");
+
+    if (books.isEmpty()) {
+        ConsoleUI.info("No Books Available.");
+    } else {
+        System.out.println("ID | Title                 | Author              | Stock");
+        System.out.println("---------------------------------------------------------------");
+
+        for (Book b : books) {
+            System.out.printf(
+                "%-3d| %-20s | %-18s | %d%n",
+                b.getId(),
+                b.getTitle(),
+                b.getAuthor(),
+                b.getStock()
+            );
+        }
+
+        ConsoleUI.success("Total Books: " + books.size());
+    }
+
+    System.out.println();
+
+    ConsoleUI.title("Magazines");
+
+    if (magazines.isEmpty()) {
+        ConsoleUI.info("No Magazines Available.");
+    } else {
+        System.out.println("ID | Title                 |  Publisher | Stock");
+        System.out.println("---------------------------------------------------------------");
+
+        for (Magazine m : magazines) {
+            System.out.printf(
+                "%-3d| %-20s | %-12s | %d%n",
+                m.getId(),
+                m.getTitle(),
+                m.getPublisher(),
+                m.getStock()
+            );
+        }
+
+        ConsoleUI.success("Total Magazines: " + magazines.size());
+    }
+
+    System.out.println();
+    ConsoleUI.title("Summary");
+    System.out.println("Total Items: " + items.size());
+    System.out.println("Books: " + books.size());
+    System.out.println("Magazines: " + magazines.size());
+}
+
 }

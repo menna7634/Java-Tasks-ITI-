@@ -11,8 +11,11 @@ public class InputUtils {
             String input = sc.nextLine().trim();
             try {
                 choice = Integer.parseInt(input);
-                if (choice >= min && choice <= max) valid = true;
-                else System.out.print("Invalid input. Enter a number (" + min + "-" + max + "): ");
+                if (choice >= min && choice <= max){
+                     valid = true;
+                 } else {
+                System.out.print("Invalid input. Enter a number (" + min + "-" + max + "): ");
+                 }
             } catch (NumberFormatException e) {
                 System.out.print("Invalid input. Enter a number (" + min + "-" + max + "): ");
             }

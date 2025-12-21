@@ -24,13 +24,19 @@ public class SimpleWordDictionary {
     }
 
 public void printAll() {
-   System.out.println("\n--- ALL WORDS ---\n");
+    System.out.println("\n--- ALL WORDS ---\n");
     wordsMap.forEach((letter, set) -> {
         if (!set.isEmpty()) {
-            System.out.println(letter + ": " + set);
+            System.out.print(letter + ": ");
+            List<String> formattedWords = new ArrayList<>();
+            for (String w : set) {
+                formattedWords.add(Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase());
+            }
+            System.out.println(String.join(", ", formattedWords));
         }
     });
 }
+
 
     
     public void printByLetter(char letter) {
